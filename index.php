@@ -49,7 +49,7 @@
         <!-- 下半 -->
         <div class="ui vertical segment">
             <div class="ui container">
-                <form class="ui form" action="lib/generator.php" method="post">
+                <form class="ui form" action="generator.php" method="post" enctype="multipart/form-data">
                     <div class="field">
                         <label>考试范围 (No.)</label>
                         <div class="two fields">
@@ -57,7 +57,7 @@
                                 <input type="number" name="from" placeholder="从" required value="1">
                             </div>
                             <div class="field">
-                                <input type="number" name="to" placeholder="至" required value="700">
+                                <input type="number" name="to" placeholder="至" required value="100">
                             </div>
                         </div>
                     </div>
