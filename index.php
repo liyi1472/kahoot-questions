@@ -54,10 +54,10 @@
                         <label>考试范围 (No.)</label>
                         <div class="two fields">
                             <div class="field">
-                                <input type="number" name="from" placeholder="从" required value="1">
+                                <input type="number" name="from" placeholder="从" required value="501">
                             </div>
                             <div class="field">
-                                <input type="number" name="to" placeholder="至" required value="100">
+                                <input type="number" name="to" placeholder="至" required value="600">
                             </div>
                         </div>
                     </div>

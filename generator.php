@@ -10,9 +10,15 @@ if (!file_exists('data/upload')) {
     mkdir('data/upload');
 }
 
+function getCandidates($answerWord)
+{
+    $candidates = [];
+    shuffle($candidates);
+    return $candidates;
+}
+
 // 获取单词表文件
 $glossaryFile = $_FILES['glossary'];
-
 if (
     $_SERVER['REQUEST_METHOD'] == 'POST'
     && $glossaryFile
@@ -28,16 +34,6 @@ if (
     $reader->setReadDataOnly(true);
     $reader->setLoadSheetsOnly($sheetName);
     $spreadsheet = $reader->load($glossaryTmpFile);
-    // 读入全部单词
-    $glossary = [];
-    foreach ($spreadsheet->getActiveSheet()->rangeToArray('E6:E2310') as $row) {
-        $glossary[] = $row[0];
-    }
-    // 读入全部例句
-    $sentences = [];
-    foreach ($spreadsheet->getActiveSheet()->rangeToArray('H6:H2310') as $row) {
-        $sentences[] = $row[0];
-    }
     // 决定生成问题
     $questionNos = [];
     while (count($questionNos) < $_POST['quantity']) {
@@ -49,37 +45,30 @@ if (
     // 生成决定问题
     $questions = [];
     foreach ($questionNos as $questionNo) {
-        // 生成填空
-        $word = $glossary[$questionNo];
+        // 生成填空题面
+        $answerWord = $spreadsheet->getActiveSheet()->getCell('E' . (6 + $questionNo))->getValue();
+        $sentence = $spreadsheet->getActiveSheet()->getCell('H' . (6 + $questionNo))->getValue();
         $blank = '（';
-        for ($i = 0; $i < mb_strlen($word); $i++) {
+        for ($i = 0; $i < mb_strlen($answerWord); $i++) {
             $blank .= '　';
         }
         $blank .= '）';
+        $questionDescription = preg_replace('/' . $answerWord . '/i', $blank, $sentence);
         // 查找相似词作为选项候选
-        $candidates = [];
-        foreach ($glossary as $curWord) {
-            if (
-                mb_strlen($curWord) == mb_strlen($word)
-                // && mb_substr($curWord, 0, 1) == mb_substr($word, 0, 1)
-            ) {
-                $candidates[] = $curWord;
-            }
-            if (count($candidates) == 4) {
-                break;
-            }
-        }
-        shuffle($candidates);
+        $candidates = getCandidates($answerWord);
         // 生成选项
         $options = [];
-        $answer = mt_rand(1, 4);
-        for ($i = 0; $i < 4; $i++) {
-            if ($i == $answer - 1) {
-                $options[] = $word;
+        $answerOption = mt_rand(1, 4);
+        for ($i = 1; $i <= 4; $i++) {
+            if ($i == $answerOption) {
+                $options[] = $answerWord;
             } else {
                 do {
                     $option = array_shift($candidates);
-                    if ($option != $word && !in_array($option, $options)) {
+                    if (!$option) {
+                        $options[] = '';
+                        break;
+                    } elseif ($option != $answerWord && !in_array($option, $options)) {
                         $options[] = $option;
                         break;
                     }
@@ -88,14 +77,13 @@ if (
         }
         // 生成题目
         $question = [
-            preg_replace('/' . $word . '/i', $blank, $sentences[$questionNo]),
+            $questionDescription,
             $options[0],
             $options[1],
             $options[2],
             $options[3],
-            // 时间限制: 20秒
-            20,
-            $answer,
+            20, // 时间限制: 20秒
+            $answerOption,
         ];
         $questions[] = $question;
     }
