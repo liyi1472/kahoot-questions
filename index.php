@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HSK 出题系统 for Kahoot! - HSK-KAHOOT.INOCHI.ICU</title>
     <!-- Semantic UI -->
-    <link href="https://libs.cdnjs.net/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" />
     <!-- 自定义 -->
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -49,15 +49,15 @@
         <!-- 下半 -->
         <div class="ui vertical segment">
             <div class="ui container">
-                <form class="ui form" action="lib/generator.php" method="post">
+                <form class="ui form" action="generator.php" method="post" enctype="multipart/form-data">
                     <div class="field">
                         <label>考试范围 (No.)</label>
                         <div class="two fields">
                             <div class="field">
-                                <input type="text" name="from" placeholder="从">
+                                <input type="number" name="from" placeholder="从" required value="501">
                             </div>
                             <div class="field">
-                                <input type="text" name="to" placeholder="至">
+                                <input type="number" name="to" placeholder="至" required value="600">
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                     <div class="field">
                         <label>最新单词表</label>
                         <div class="field">
-                            <input type="file" name="glossary">
+                            <input type="file" name="glossary" required>
                         </div>
                     </div>
                     <button class="ui secondary button" type="submit">提交</button>
@@ -90,9 +90,9 @@
     </div>
 
     <!-- jQuery -->
-    <script src="https://libs.cdnjs.net/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     <!-- Semantic UI -->
-    <script src="https://libs.cdnjs.net/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous"></script>
     <!-- 自定义 -->
     <script src="js/master.js"></script>
 </body>
