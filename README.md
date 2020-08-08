@@ -1,1 +1,4 @@
-Kahoot! HSK 出題システム。
+# Kahoot! HSK 出題システム
+
+（つづく）
+
