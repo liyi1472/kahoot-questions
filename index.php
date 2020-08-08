@@ -51,13 +51,19 @@
             <div class="ui container">
                 <form class="ui form" action="generator.php" method="post" enctype="multipart/form-data">
                     <div class="field">
+                        <label>最新单词表</label>
+                        <div class="field">
+                            <input type="file" name="glossary" required>
+                        </div>
+                    </div>
+                    <div class="field">
                         <label>考试范围 (No.)</label>
                         <div class="two fields">
                             <div class="field">
-                                <input type="number" name="from" placeholder="从" required value="501">
+                                <input type="number" name="from" placeholder="从" required>
                             </div>
                             <div class="field">
-                                <input type="number" name="to" placeholder="至" required value="600">
+                                <input type="number" name="to" placeholder="至" required>
                             </div>
                         </div>
                     </div>
@@ -74,12 +80,6 @@
                                 <div class="item" data-value="50">50道</div>
                                 <div class="item" data-value="100">100道</div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>最新单词表</label>
-                        <div class="field">
-                            <input type="file" name="glossary" required>
                         </div>
                     </div>
                     <button class="ui secondary button" type="submit">提交</button>
