@@ -73,6 +73,7 @@ if (
     $_SERVER['REQUEST_METHOD'] == 'POST'
     && $glossaryFile
     && $glossaryFile['type'] == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    && $_POST['to'] - $_POST['from'] >= $_POST['quantity']
 ) {
     // 保存临时单词表文件
     $glossaryTmpFile = 'data/upload/' . time() . '.xlsx';
